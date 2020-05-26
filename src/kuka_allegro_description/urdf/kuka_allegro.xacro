@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<robot name="kuka_allegro" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- kuka. It has already a world link. I do not need to make one.
+  the default value for arg [name] is [iiwa]. Then the name of the EE will be [iiwa_link_ee] -->
+ <xacro:include filename="$(find kuka_allegro_description)/urdf/iiwa14.urdf.xacro"/>
+
+  <!-- allegro. [base_link] is the root for allegro hand  -->
+ <xacro:include filename="$(find kuka_allegro_description)/urdf/allegro.urdf.xacro"/>
+
+<xacro:allegro_macro name="al" parent="iiwa_link_ee">
+        <origin xyz="0 0 1" rpy="0 0 0" />
+</xacro:allegro_macro>
+
+<gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    <robotNamespace>/</robotNamespace>
+  </plugin>
+</gazebo>
+
+</robot>
+
+
+
