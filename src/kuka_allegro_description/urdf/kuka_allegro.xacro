@@ -1,16 +1,33 @@
 <?xml version="1.0" ?>
 <robot name="kuka_allegro" xmlns:xacro="http://ros.org/wiki/xacro">
 
+<xacro:property name="M_PI"         value="3.1415926535897931"/>
+
+<xacro:arg name="include_part"    default="false" />
+
   <!-- kuka. It has already a world link. I do not need to make one.
   the default value for arg [name] is [iiwa]. Then the name of the EE will be [iiwa_link_ee] -->
  <xacro:include filename="$(find kuka_allegro_description)/urdf/iiwa14.urdf.xacro"/>
 
+
+ <!-- Include the KUKA mount -->
+<xacro:include filename="$(find kuka_allegro_description)/urdf/lbr4_mount.urdf.xacro"/>
+<xacro:lbr4_mount parent="iiwa_link_ee"/>
+    
+    <joint name="lbr4_allegro" type="fixed">
+      <parent link="lbr4_mount"/>
+      <child link="allegro_mount"/>
+      <origin xyz="-0.0 0 0.01" rpy="0 1.57 0"/>
+    </joint>
+
+<!--    <xacro:include filename="$(find kuka_allegro_description)/urdf/allegro.transmission.xacro"/> -->
+
   <!-- allegro. [base_link] is the root for allegro hand  -->
  <xacro:include filename="$(find kuka_allegro_description)/urdf/allegro.urdf.xacro"/>
 
-<xacro:allegro_macro name="al" parent="iiwa_link_ee">
+<!-- <xacro:allegro_macro name="al" parent="iiwa_link_ee">
         <origin xyz="0 0 1" rpy="0 0 0" />
-</xacro:allegro_macro>
+</xacro:allegro_macro> -->
 
 <gazebo>
   <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">

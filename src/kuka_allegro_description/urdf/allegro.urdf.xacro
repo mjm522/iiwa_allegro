@@ -1,7 +1,6 @@
 <?xml version="1.0" ?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find kuka_allegro_description)/urdf/allegro.transmission.xacro"/>
   <!-- ======================== BASE PARAMS ========================= -->
   <!-- ======================== FINGER PARAMS ======================== -->
   <!-- full height from joint to tip. when used,
@@ -10,6 +9,7 @@
   <!-- ========================= THUMB PARAMS ========================= -->
   <!-- ========================= LIMITS ========================= -->
   <!-- ============================================================================= -->
+
   <!-- BASE -->
   <material name="AllegroBlack">
     <color rgba="0.2 0.2 0.2 1"/>
@@ -21,14 +21,6 @@
   <material name="AllegroWhite">
     <color rgba="1 1 1 1"/>
   </material>
-
-  <xacro:macro name="allegro_macro" params="parent name *origin">
-
-    <joint name="${name}_base_joint" type="fixed">
-            <insert_block name="origin"/>
-            <parent link="${parent}"/>
-            <child link="allegro_mount"/>
-    </joint>
 
     <link name="allegro_mount">
     <inertial>
@@ -59,8 +51,6 @@
 
   
 
-
-
   <link name="palm_link">
     <inertial>
       <mass value="0.4154" />
@@ -69,14 +59,14 @@
     </inertial>
     <visual>
       <geometry>
-        <mesh filename="package://kuka_allegro_description/meshes/allegro/base_link_biotac.stl"/>
+        <mesh filename="package://kuka_allegro_description/meshes/allegro/base_link.stl"/>
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0 "/>
       <material name="Black"/>
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://kuka_allegro_description/meshes/allegro/collision/base_link_biotac.stl"/>
+        <mesh filename="package://kuka_allegro_description/meshes/allegro/collision/base_link.stl"/>
       </geometry>
       <origin rpy="0 0 0" xyz="0 0 0 "/>
 
@@ -90,6 +80,9 @@
   <gazebo reference="palm_link">
     <material value="Gazebo/Black"/>
   </gazebo>
+
+
+
   <!-- ============================================================================= -->
   <!-- FINGERS -->
   <!-- RIGHT HAND due to which finger is number 0 -->
@@ -125,6 +118,9 @@
     <origin rpy="-0.08726646255 0 0" xyz="0 0.0435 -0.001542"/>
     <dynamics damping="1" friction="0"/>
   </joint>
+
+   <xacro:if value="$(arg include_part)">
+    
   <!-- [LINK 1, 5, 9] -->
   <link name="index_link_1">
     <visual>
@@ -248,6 +244,8 @@
     <child link="index_tip"/>
     <origin rpy="0 0 0" xyz="0 0 0.0267"/>
   </joint>
+
+
 
 <gazebo reference="index_tip_contactsensor_sensor" type="contact">
   <sensor name="index_tip_contactsensor" type="contact">
@@ -765,5 +763,5 @@
     <link name="thumb_link_3" servoP="1000" servoI="0" servoD="15"/>
 
   </klampt>
-</xacro:macro>
+</xacro:if>
 </robot>
