@@ -3,6 +3,10 @@
 
 <xacro:property name="M_PI"         value="3.1415926535897931"/>
 
+<xacro:property name="stability_k"         value="1e3"/>
+
+<xacro:property name="stability_k1"         value="1e4"/>
+
 <xacro:arg name="include_part"    default="false" />
 
   <!-- kuka. It has already a world link. I do not need to make one.
@@ -17,10 +21,10 @@
     <joint name="lbr4_allegro" type="fixed">
       <parent link="lbr4_mount"/>
       <child link="allegro_mount"/>
-      <origin xyz="-0.0 0 0.01" rpy="0 1.57 0"/>
+      <origin xyz="-0.0 0 0.01" rpy="0 1.57 3.14"/>
     </joint>
 
-<!--    <xacro:include filename="$(find kuka_allegro_description)/urdf/allegro.transmission.xacro"/> -->
+   <xacro:include filename="$(find kuka_allegro_description)/urdf/allegro.transmission.xacro"/>
 
   <!-- allegro. [base_link] is the root for allegro hand  -->
  <xacro:include filename="$(find kuka_allegro_description)/urdf/allegro.urdf.xacro"/>
