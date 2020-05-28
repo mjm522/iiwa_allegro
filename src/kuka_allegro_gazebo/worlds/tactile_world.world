@@ -9,12 +9,12 @@
     <include>
       <uri>model://sun</uri>
     </include>
-    <model name="can">
+    <model name="half_sphere">
       <include>
-        <uri>model://beer</uri>
+        <uri>model://half_sphere</uri>
       </include>
-      <pose>0.462 -0.05 0.78 0 0 0</pose>
-    </model>
+      <pose>0.5 0 0.8 0 3.14 0</pose>
+    </model> 
     <model name="table">
       <include>
         <uri>model://cafe_table</uri>
